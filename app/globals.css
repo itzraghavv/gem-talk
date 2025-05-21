@@ -1,26 +1,74 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --color-background: #ffff; /* White */
+  --color-foreground: rgb(6, 16, 59); /* Dark Blue/Almost Black */
+  --color-card: white;
+  --color-card-foreground: rgb(6, 16, 59);
+  --color-popover: white;
+  --color-popover-foreground: rgb(6, 16, 59);
+  --color-primary: rgb(108, 43, 217); /* Vibrant Purple */
+  --color-primary-foreground: rgb(250, 250, 250); /* Light Gray/White */
+  --color-secondary: rgb(37, 99, 235); /* Vibrant Blue */
+  --color-secondary-foreground: rgb(250, 250, 250);
+  --color-muted: rgb(241, 245, 249); /* Light Grayish Blue */
+  --color-muted-foreground: rgb(100, 116, 139); /* Desaturated Dark Blue */
+  --color-accent: rgb(244, 244, 245); /* Almost white with a hint of blue */
+  --color-accent-foreground: rgb(6, 16, 59);
+  --color-destructive: rgb(239, 68, 68);
+  --color-destructive-foreground: rgb(250, 250, 250);
+  --color-border: rgb(226, 232, 240); /* Light Gray */
+  --color-input: rgb(226, 232, 240);
+  --color-ring: rgb(108, 43, 217); /* Primary color for rings */
+  --color-radius: 0.5rem;
+
+  --radius: 0.75rem;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+.dark {
+  --color-background: oklch(6, 16, 59);
+  --color-foreground: rgb(250, 250, 250);
+  --color-card: rgb(6, 16, 59);
+  --color-card-foreground: rgb(250, 250, 250);
+  --color-popover: rgb(6, 16, 59);
+  --color-popover-foreground: rgb(250, 250, 250);
+  --color-primary: oklch(108, 43, 217);
+  --color-primary-foreground: oklch(rgb(250, 250, 250));
+  --color-secondary: rgb(37, 99, 235);
+  --color-secondary-foreground: rgb(250, 250, 250);
+  --color-muted: rgb(15, 23, 42);
+  --color-muted-foreground: rgb(100, 116, 139);
+  --color-accent: rgb(15, 23, 42);
+  --color-accent-foreground: rgb(250, 250, 250);
+  --color-destructive: rgb(127, 29, 29);
+  --color-destructive-foreground: rgb(250, 250, 250);
+  --color-border: rgb(15, 23, 42);
+  --color-input: rgb(15, 23, 42);
+  --color-ring: rgb(108, 43, 217);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  * {
+    @apply border-border;
   }
-}
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-muted;
+    border-radius: var(--radius);
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-primary/50; /* Using primary color with opacity */
+    border-radius: var(--radius);
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-primary/70;
+  }
 }
