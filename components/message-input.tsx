@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Send } from "lucide-react";
-import { Button } from "@/components/ui/button"; // Assuming shadcn/ui button
-import { Textarea } from "@/components/ui/text-area"; // Assuming shadcn/ui textarea
+import { Button } from "@/components/ui/button"; 
+import { Textarea } from "@/components/ui/text-area";
 
 interface MessageInputProps {
   onSendMessage: (text: string) => void;

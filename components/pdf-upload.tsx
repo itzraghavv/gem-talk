@@ -2,7 +2,7 @@
 
 import React, { useState, useCallback } from "react";
 import { UploadCloud, FileText, X } from "lucide-react";
-import { Button } from "@/components/ui/button"; // Assuming shadcn/ui button
+import { Button } from "@/components/ui/button"; 
 import { toast } from "sonner";
 import { uploadPdf } from "@/lib/upload-pdf";
 

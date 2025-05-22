@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { GoogleGenAI } from "@google/genai";
-import { Arapey } from "next/font/google";
+import pdfParse from "pdf-parse";
 
 export async function POST(req: NextRequest) {
   const api_key = process.env.GOOGLE_GEMINI!;
@@ -20,7 +20,7 @@ export async function POST(req: NextRequest) {
 
   const {
     data: { publicUrl },
-  } = supabase.storage
+  } = await supabase.storage
     .from("pdf-uploads")
     .getPublicUrl("Assignment_ Full Stack Developer.pdf");
 
@@ -28,7 +28,7 @@ export async function POST(req: NextRequest) {
 
   const { data, error } = await supabase.storage
     .from("pdf-uploads")
-    .download("Assignment_ Full Stack Developer.pdf");
+    .download("42cce4cb-c6ff-47ca-9298-b0f8be173824-1stCase2Study.pdf");
 
   if (error || !data) {
     console.log(error);
@@ -39,7 +39,15 @@ export async function POST(req: NextRequest) {
   }
 
   const arrayBuffer = await data.arrayBuffer();
-  console.log(arrayBuffer);
+  const buffer = Buffer.from(arrayBuffer);
 
-  return NextResponse.json({ fileUrl: publicUrl });
+  // try using diff parse lib
+  const parsedData = await pdfParse(buffer);
+  const parsedText = parsedData.text;
+
+  if (!parsedText) {
+    throw new Error("failed ni hora");
+  }
+
+  return NextResponse.json({ parsedText: parsedText });
 }
