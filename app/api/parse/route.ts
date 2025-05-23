@@ -41,13 +41,11 @@ export async function POST(req: NextRequest) {
   const arrayBuffer = await data.arrayBuffer();
   const buffer = Buffer.from(arrayBuffer);
 
-  // try using diff parse lib
   const parsedData = await pdfParse(buffer);
-  const parsedText = parsedData.text;
 
-  if (!parsedText) {
+  if (!parsedData) {
     throw new Error("failed ni hora");
   }
 
-  return NextResponse.json({ parsedText: parsedText });
+  return NextResponse.json({ parsedText: parsedData.text });
 }
