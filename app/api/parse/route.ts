@@ -18,17 +18,19 @@ export async function POST(req: NextRequest) {
     throw new Error("User is not authenticated");
   }
 
+  const { filePath } = await req.json();
+  console.log(filePath);
+  const path = `${user.id}-${filePath}`;
+
   const {
     data: { publicUrl },
-  } = await supabase.storage
-    .from("pdf-uploads")
-    .getPublicUrl("Assignment_ Full Stack Developer.pdf");
+  } = await supabase.storage.from("pdf-uploads").getPublicUrl(path);
 
   console.log(publicUrl);
 
   const { data, error } = await supabase.storage
     .from("pdf-uploads")
-    .download("42cce4cb-c6ff-47ca-9298-b0f8be173824-1stCase2Study.pdf");
+    .download(path);
 
   if (error || !data) {
     console.log(error);
@@ -44,8 +46,15 @@ export async function POST(req: NextRequest) {
   const parsedData = await pdfParse(buffer);
 
   if (!parsedData) {
-    throw new Error("failed ni hora");
+    throw new Error("Failed to parse PDF");
   }
 
-  return NextResponse.json({ parsedText: parsedData.text });
+  const result = await ai.models.generateContent({
+    model: "gemini-2.0-flash",
+    contents: `Analyzize this pdf ${parsedData.text}`,
+  });
+
+  const response = await result.text;
+
+  return NextResponse.json({ About_PDF: response });
 }

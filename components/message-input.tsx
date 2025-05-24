@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Send } from "lucide-react";
-import { Button } from "@/components/ui/button"; 
+import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/text-area";
 
 interface MessageInputProps {
@@ -50,7 +50,7 @@ export const MessageInput: React.FC<MessageInputProps> = ({
           disabled={isLoading || !inputText.trim()}
           className="bg-primary-accent hover:bg-primary-accent/90"
         >
-          <Send className="h-5 w-5" />
+          <Send className="size-5" />
         </Button>
       </div>
     </form>

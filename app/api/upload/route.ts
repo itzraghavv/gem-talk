@@ -37,12 +37,11 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const fileUrl = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/pdfs/${fileName}`;
+  const fileUrl = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/sign/pdf-uploads/${fileName}`;
 
   try {
-    
   } catch (err) {
     console.log(err);
   }
-  return NextResponse.json({ url: fileUrl, path: data?.path });
+  return NextResponse.json({ url: fileUrl, data: data });
 }
