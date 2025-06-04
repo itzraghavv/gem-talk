@@ -7,7 +7,7 @@ import { useAuth } from "@/hooks/use-auth";
 import { RegisterSchema, RegisterFormData } from "@/lib/validator";
 import Link from "next/link";
 import { toast } from "sonner";
-import { Form, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 export default function Register() {

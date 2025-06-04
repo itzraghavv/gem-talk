@@ -43,17 +43,25 @@ export const Dashboard = () => {
       sender: "user",
       timestamp: new Date().toISOString(),
     };
-    setMessages((prevMessages) => [...prevMessages, newUserMessage]);
+
+    const updatedMessages = [...messages, newUserMessage];
+    setMessages(updatedMessages);
     setIsLoading(true);
 
     try {
-      const res = await axios.post("/api/parse", {
+      const res = await axios.post("/api/chat", {
         filePath: uploadedFile.name,
         question: text,
       });
 
-      console.log(res);
+      console.log(res.data);
+      const aiResponse: Message = res.data.response;
+
+      const finalMessages = [...updatedMessages, aiResponse];
+      setMessages(finalMessages);
+      setIsLoading(false);
     } catch (err) {
+      toast("Failed to load response from AI");
       console.log(err);
     }
   };

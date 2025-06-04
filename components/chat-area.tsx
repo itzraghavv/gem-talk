@@ -41,8 +41,8 @@ export const ChatArea: React.FC<ChatAreaProps> = ({
             </p>
           </div>
         )}
-        {messages.map((msg) => (
-          <ChatMessage key={msg.id} message={msg} />
+        {messages.map((msg, index) => (
+          <ChatMessage key={index} message={msg} />
         ))}
         {isLoading && (
           <div className="flex items-center space-x-2 p-3 rounded-lg bg-card self-start animate-fade-in">
