@@ -2,7 +2,7 @@
 
 import React, { useState, useCallback } from "react";
 import { UploadCloud, FileText, X } from "lucide-react";
-import { Button } from "@/components/ui/button"; 
+import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { uploadPdf } from "@/lib/upload-pdf";
 
@@ -33,7 +33,7 @@ export const PdfUpload: React.FC<PdfUploadProps> = ({
 
       try {
         await uploadPdf(file);
-        toast.success("PDF uploaded successfully to Supabase!");
+        toast.success("PDF uploaded successfully!");
       } catch (error) {
         console.error("Upload failed", error);
         toast.error("Failed to upload PDF.");

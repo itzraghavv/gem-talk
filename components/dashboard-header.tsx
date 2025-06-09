@@ -1,7 +1,13 @@
 import { Archive, Download } from "lucide-react";
 import { Button } from "./ui/button";
 
-export const DashboardHeader = () => {
+interface DashboardHeaderProps {
+  setIsHistoryPanelOpen: (value: boolean) => void;
+}
+
+export const DashboardHeader = ({
+  setIsHistoryPanelOpen,
+}: DashboardHeaderProps) => {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 max-w-screen-2xl items-center justify-between">
@@ -9,7 +15,13 @@ export const DashboardHeader = () => {
           <span className="font-bold text-xl text-primary">GemChat</span>
         </a>
         <div className="flex items-center space-x-2">
-          <Button variant="outline">
+          <Button
+            variant="outline"
+            onClick={() => {
+              setIsHistoryPanelOpen(true);
+              console.log("clcick");
+            }}
+          >
             <Archive className="mr-2 size-4" />
             Chat History
           </Button>

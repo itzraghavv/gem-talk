@@ -22,8 +22,8 @@ export interface ChatSession {
 }
 
 interface ChatHistoryPanelProps {
-  isOpen?: boolean;
-  onOpenChange?: (isOpen: boolean) => void;
+  isOpen: boolean;
+  onOpenChange: (isOpen: boolean) => void;
   chatHistory?: ChatSession[];
   onLoadChat?: (sessionId: string) => void;
   onDeleteChat?: (sessionId: string) => void;
@@ -48,24 +48,26 @@ export const ChatHistoryPanel: React.FC<ChatHistoryPanelProps> = ({
         </SheetHeader>
         <ScrollArea className="flex-grow">
           <div className="p-6 space-y-3">
-            <p className="text-sm text-muted-foreground text-center py-10">
-              No chat history yet. Start a new chat!
-            </p>
+            {chatHistory?.length === 0 && (
+              <p className="text-sm text-muted-foreground text-center py-10">
+                No chat history yet. Start a new chat!
+              </p>
+            )}
 
             <div className="p-3 rounded-md border border-border hover:bg-muted/50 transition-colors cursor-pointer group">
               <div className="flex justify-between items-start">
                 <div>
                   <h4 className="font-semibold text-sm text-foreground truncate group-hover:text-primary-accent">
-                    "Chat Session
+                    Chat Session
                   </h4>
                   <p className="text-xs text-muted-foreground">
                     <span className="flex items-center">
                       <FileText className="size-3 mr-1" />
                     </span>
-                    "General Chat"
+                    General Chat
                   </p>
                   <p className="text-xs text-muted-foreground mt-0.5">
-                    "date here"
+                    date here
                   </p>
                 </div>
                 <Button

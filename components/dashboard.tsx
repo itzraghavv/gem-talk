@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { ChatArea } from "./chat-area";
 import { PdfUpload } from "./pdf-upload";
-import { toast } from "sonner";
+import { toast } from "@/components/ui/sonner";
 import { Message } from "./chat-message";
 import { DashboardHeader } from "./dashboard-header";
 import { ChatHistoryPanel } from "./chat-history";
@@ -13,27 +13,30 @@ export const Dashboard = () => {
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isHistoryPanelOpen, setIsHistoryPanelOpen] = useState(false);
 
   const handleFileSelect = (file: File) => {
     if (file.type !== "application/pdf") {
-      toast("invalid file type");
+      toast.error("Invalid file type");
       return;
     }
 
     setUploadedFile(file);
     setMessages([]);
-    toast("pdf uploaded");
+    toast.success("PDF uploaded successfully!");
   };
 
   const clearFile = () => {
     setUploadedFile(null);
     setMessages([]);
-    toast("pdf cleared");
+    toast.success("Cleared the File");
   };
 
   const handleSendMessage = async (text: string) => {
     if (!uploadedFile) {
-      toast("no pdf uploaded");
+      toast.error("No pdf uploaded", {
+        description: "Please Upload a PDF",
+      });
       return;
     }
 
@@ -61,7 +64,7 @@ export const Dashboard = () => {
       setMessages(finalMessages);
       setIsLoading(false);
     } catch (err) {
-      toast("Failed to load response from AI");
+      toast.error("Failed to load response from AI");
       console.log(err);
     }
   };
@@ -69,7 +72,7 @@ export const Dashboard = () => {
   const handleExportChat = () => {
     // Placeholder for chat export functionality
     if (messages.length === 0) {
-      toast("nothing to export");
+      toast.error("Nothing to export");
       return;
     }
     // For now, just log to console or show a toast
@@ -90,7 +93,7 @@ export const Dashboard = () => {
     document.body.removeChild(link);
     URL.revokeObjectURL(link.href);
 
-    toast("chat exported");
+    toast.success("Chat Exported!");
     console.log("Exporting chat...", messages);
   };
 
@@ -108,7 +111,7 @@ export const Dashboard = () => {
 
   return (
     <>
-      <DashboardHeader />
+      <DashboardHeader setIsHistoryPanelOpen={setIsHistoryPanelOpen} />
       <main className="flex-grow grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6 min-h-0">
         <aside className="lg:col-span-1 h-auto lg:h-full">
           <PdfUpload
@@ -117,7 +120,7 @@ export const Dashboard = () => {
             clearFile={clearFile}
           />
         </aside>
-        <section className="h-screen flex flex-col lg:col-span-2  lg:h-full min-h-0">
+        <section className="h-screen flex flex-col lg:col-span-2 lg:h-full min-h-0">
           <ChatArea
             messages={messages}
             onSendMessage={handleSendMessage}
@@ -126,7 +129,10 @@ export const Dashboard = () => {
           />
         </section>
       </main>
-      <ChatHistoryPanel />
+      <ChatHistoryPanel
+        isOpen={isHistoryPanelOpen}
+        onOpenChange={setIsHistoryPanelOpen}
+      />
     </>
   );
 };

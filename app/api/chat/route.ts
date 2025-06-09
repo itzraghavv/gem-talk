@@ -44,6 +44,7 @@ export async function POST(req: NextRequest) {
     session = await prisma.chatSession.create({
       data: {
         userId: user.id,
+        title: path,
       },
     });
   }
@@ -55,7 +56,7 @@ export async function POST(req: NextRequest) {
 
   await prisma.chatMessage.create({
     data: {
-      sessionId: session?.id,
+      sessionId: session.id,
       sender: "user",
       content: question,
     },
