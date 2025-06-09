@@ -54,32 +54,34 @@ export const ChatHistoryPanel: React.FC<ChatHistoryPanelProps> = ({
               </p>
             )}
 
-            <div className="p-3 rounded-md border border-border hover:bg-muted/50 transition-colors cursor-pointer group">
-              <div className="flex justify-between items-start">
-                <div>
-                  <h4 className="font-semibold text-sm text-foreground truncate group-hover:text-primary-accent">
-                    Chat Session
-                  </h4>
-                  <p className="text-xs text-muted-foreground">
-                    <span className="flex items-center">
-                      <FileText className="size-3 mr-1" />
-                    </span>
-                    General Chat
-                  </p>
-                  <p className="text-xs text-muted-foreground mt-0.5">
-                    date here
-                  </p>
+            {chatHistory?.map((chat, index) => (
+              <div className="p-3 rounded-md border border-border hover:bg-muted/50 transition-colors cursor-pointer group">
+                <div className="flex justify-between items-start">
+                  <div>
+                    <h4 className="font-semibold text-sm text-foreground truncate group-hover:text-primary-accent">
+                      {chat.title || "Undefined Chat"}
+                    </h4>
+                    <p className="text-xs text-muted-foreground">
+                      <span className="flex items-center">
+                        <FileText className="size-3 mr-1" />
+                      </span>
+                      {chat.pdfName || "General Chat"}
+                    </p>
+                    <p className="text-xs text-muted-foreground mt-0.5">
+                      {new Date(chat.timestamp).toLocaleString()}
+                    </p>
+                  </div>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="h-7 w-7 opacity-0 group-hover:opacity-100 transition-opacity text-destructive hover:text-destructive/80"
+                    aria-label="Delete chat"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </Button>
                 </div>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="h-7 w-7 opacity-0 group-hover:opacity-100 transition-opacity text-destructive hover:text-destructive/80"
-                  aria-label="Delete chat"
-                >
-                  <Trash2 className="w-4 h-4" />
-                </Button>
               </div>
-            </div>
+            ))}
           </div>
         </ScrollArea>
         <div className="p-6 border-t border-border">

@@ -41,12 +41,18 @@ export async function POST(req: NextRequest) {
       },
     });
   } else {
-    session = await prisma.chatSession.create({
-      data: {
-        userId: user.id,
-        title: path,
-      },
+    session = await prisma.chatSession.findFirst({
+      where: { userId: user.id, title: path },
     });
+
+    if (!session) {
+      session = await prisma.chatSession.create({
+        data: {
+          userId: user.id,
+          title: filePath,
+        },
+      });
+    }
   }
 
   if (!session)

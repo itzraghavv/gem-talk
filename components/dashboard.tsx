@@ -6,13 +6,15 @@ import { PdfUpload } from "./pdf-upload";
 import { toast } from "@/components/ui/sonner";
 import { Message } from "./chat-message";
 import { DashboardHeader } from "./dashboard-header";
-import { ChatHistoryPanel } from "./chat-history";
+import { ChatHistoryPanel, ChatSession } from "./chat-history";
 import axios from "axios";
 
 export const Dashboard = () => {
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+
+  const [chatHistory, setChatHistory] = useState<ChatSession[]>([]);
   const [isHistoryPanelOpen, setIsHistoryPanelOpen] = useState(false);
 
   const handleFileSelect = (file: File) => {
@@ -57,7 +59,6 @@ export const Dashboard = () => {
         question: text,
       });
 
-      console.log(res.data);
       const aiResponse: Message = res.data.response;
 
       const finalMessages = [...updatedMessages, aiResponse];
@@ -65,17 +66,14 @@ export const Dashboard = () => {
       setIsLoading(false);
     } catch (err) {
       toast.error("Failed to load response from AI");
-      console.log(err);
     }
   };
 
   const handleExportChat = () => {
-    // Placeholder for chat export functionality
     if (messages.length === 0) {
       toast.error("Nothing to export");
       return;
     }
-    // For now, just log to console or show a toast
     const chatText = messages
       .map(
         (msg) =>
@@ -109,6 +107,18 @@ export const Dashboard = () => {
     }
   }, []);
 
+  useEffect(() => {
+    async function getChatHistory() {
+      try {
+        const res = await axios.get("/api/chat/history");
+        setChatHistory(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    getChatHistory();
+  }, []);
+
   return (
     <>
       <DashboardHeader setIsHistoryPanelOpen={setIsHistoryPanelOpen} />
@@ -132,6 +142,7 @@ export const Dashboard = () => {
       <ChatHistoryPanel
         isOpen={isHistoryPanelOpen}
         onOpenChange={setIsHistoryPanelOpen}
+        chatHistory={chatHistory}
       />
     </>
   );
