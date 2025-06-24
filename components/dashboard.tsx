@@ -66,33 +66,8 @@ export const Dashboard = () => {
       setIsLoading(false);
     } catch (err) {
       toast.error("Failed to load response from AI");
+      console.log(err);
     }
-  };
-
-  const handleExportChat = () => {
-    if (messages.length === 0) {
-      toast.error("Nothing to export");
-      return;
-    }
-    const chatText = messages
-      .map(
-        (msg) =>
-          `${msg.sender.toUpperCase()} (${new Date(
-            msg.timestamp
-          ).toLocaleTimeString()}): ${msg.text}`
-      )
-      .join("\n\n");
-    const blob = new Blob([chatText], { type: "text/plain;charset=utf-8" });
-    const link = document.createElement("a");
-    link.href = URL.createObjectURL(blob);
-    link.download = `chat_with_${uploadedFile?.name || "ai"}.txt`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(link.href);
-
-    toast.success("Chat Exported!");
-    console.log("Exporting chat...", messages);
   };
 
   useEffect(() => {
@@ -112,6 +87,8 @@ export const Dashboard = () => {
       try {
         const res = await axios.get("/api/chat/history");
         setChatHistory(res.data);
+        console.log("res.data");
+        console.log(res.data);
       } catch (err) {
         console.log(err);
       }

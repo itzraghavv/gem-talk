@@ -41,7 +41,6 @@ export const useChatHistory = () => {
     };
 
     if (existingChatIndex > -1) {
-      // Update existing
       newHistory = chatHistory.map((chat, index) =>
         index === existingChatIndex
           ? {
@@ -53,7 +52,6 @@ export const useChatHistory = () => {
           : chat
       );
     } else {
-      // Create new
       const newChatId = `chat-${Date.now()}`;
       const newChatSession: ChatSession = {
         ...chatSessionData,
@@ -80,7 +78,7 @@ export const useChatHistory = () => {
     localStorage.setItem("pdfChatHistory", JSON.stringify(updatedHistory));
 
     if (currentChatId === sessionId) {
-      clearFile(); // Reset chat
+      clearFile(); 
     }
   };
 

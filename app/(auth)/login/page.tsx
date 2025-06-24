@@ -14,7 +14,7 @@ import { toast } from "sonner";
 export default function Register() {
   const router = useRouter();
 
-  const { auth, loading, error } = useAuth("login");
+  const { auth, loading } = useAuth("login");
 
   const {
     register,
@@ -72,7 +72,7 @@ export default function Register() {
           {loading ? "Signing in..." : "Login"}
         </Button>
         <p className="text-center text-sm text-[#8E9196]">
-          Don't have an account?{" "}
+          Don&apos;t have an account?{" "}
           <Link
             href="/register"
             className="font-medium text-primary hover:text-[#9b87f5]"

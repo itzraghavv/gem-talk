@@ -15,7 +15,7 @@ export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
-  const { auth, loading, error } = useAuth("register");
+  const { auth, loading } = useAuth("register");
   const {
     register,
     handleSubmit,

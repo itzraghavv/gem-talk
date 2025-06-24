@@ -4,9 +4,7 @@ import { redirect } from "next/navigation";
 import { Dashboard } from "@/components/dashboard";
 
 interface Props {
-  params: {
-    username: string;
-  };
+  params: Promise<{ username: string }>;
 }
 
 export default async function DashboardPage({ params }: Props) {
@@ -22,9 +20,10 @@ export default async function DashboardPage({ params }: Props) {
   }
 
   const storedUsername = await user.user_metadata?.username;
-  const u = (await params).username;
+  const { username } = await params;
+   console.log(username)
 
-  if (u !== storedUsername) {
+  if (username !== storedUsername) {
     redirect(`/dashboard/${storedUsername}`);
   }
 

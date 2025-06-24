@@ -33,8 +33,6 @@ export const ChatHistoryPanel: React.FC<ChatHistoryPanelProps> = ({
   isOpen,
   onOpenChange,
   chatHistory,
-  onLoadChat,
-  onDeleteChat,
 }) => {
   return (
     <Sheet open={isOpen} onOpenChange={onOpenChange}>
@@ -55,7 +53,10 @@ export const ChatHistoryPanel: React.FC<ChatHistoryPanelProps> = ({
             )}
 
             {chatHistory?.map((chat, index) => (
-              <div className="p-3 rounded-md border border-border hover:bg-muted/50 transition-colors cursor-pointer group">
+              <div
+                key={index}
+                className="p-3 rounded-md border border-border hover:bg-muted/50 transition-colors cursor-pointer group"
+              >
                 <div className="flex justify-between items-start">
                   <div>
                     <h4 className="font-semibold text-sm text-foreground truncate group-hover:text-primary-accent">
