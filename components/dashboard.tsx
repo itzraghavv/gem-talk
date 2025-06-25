@@ -63,10 +63,11 @@ export const Dashboard = () => {
 
       const finalMessages = [...updatedMessages, aiResponse];
       setMessages(finalMessages);
-      setIsLoading(false);
     } catch (err) {
       toast.error("Failed to load response from AI");
       console.log(err);
+    } finally {
+      setIsLoading(false);
     }
   };
 

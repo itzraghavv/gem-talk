@@ -13,7 +13,7 @@ export const HeroSection = () => {
           Upload a PDF and get intelligent answers instantly. GemTalk makes
           understanding complex documents simple and fast.
         </p>
-        <Link href={"/dashboard"}>
+        <Link href={"/login"}>
           <Button className="font-semibold">
             Get Started <ArrowRight className="ml-2 size-5" />
           </Button>
