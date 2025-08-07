@@ -68,7 +68,7 @@ export const Footer = () => {
           <p>&copy; {currentYear} GemChat. All rights reserved.</p>
           <div className="flex space-x-4 mt-4 sm:mt-0">
             <a
-              href="https://github.com/itzraghavv"
+              href="https://github.com/itzraghavv/gem-talk"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-primary transition-colors"
@@ -76,7 +76,7 @@ export const Footer = () => {
               <Github className="w-5 h-5" />
             </a>
             <a
-              href="https://linkedin.com"
+              href="www.linkedin.com/in/raghavv27"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-primary transition-colors"
@@ -84,7 +84,7 @@ export const Footer = () => {
               <Linkedin className="w-5 h-5" />
             </a>
             <a
-              href="https://twitter.com"
+              href="https://x.com/rghvv_"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-primary transition-colors"
